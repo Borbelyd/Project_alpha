@@ -1,0 +1,22 @@
+2025-04-25 00:19:11.8926|DEBUG|Program|location of wsfscservice is: C:\Users\riott\.nuget\packages\websharper.fsharp\8.0.0.540\tools\net8.0\win-x64 (server side)
+2025-04-25 00:19:11.9088|DEBUG|Program|pipename is: cd040682b4badf65ba5a8f3bf69bc39f (server side)
+2025-04-25 00:19:11.9088|DEBUG|Program|Compiling C:\Users\riott\Desktop\dominik-f\Project_alpha\Project_alpha\Project_alpha.fsproj
+2025-04-25 00:19:18.7666|TRACE|Program|Server sends: n: F# compilation: 00:00:06.9336841
+2025-04-25 00:19:24.0947|TRACE|Program|Server sends: n: Checking project: 00:00:05.3315540
+2025-04-25 00:19:24.0996|TRACE|Program|Server sends: n: Waiting on merged metadata: 00:00:00.0050123
+2025-04-25 00:19:24.7110|TRACE|Program|Server sends: n: Parsing with FCS: 00:00:00.6113117
+2025-04-25 00:19:24.7181|TRACE|Program|Server sends: n: Analyzing function arguments: 00:00:00.0071861
+2025-04-25 00:19:24.9057|TRACE|Program|Server sends: n: Resolving names: 00:00:00.1875946
+2025-04-25 00:19:25.1487|TRACE|Program|Server sends: n: WebSharper translation: 00:00:00.2429514
+2025-04-25 00:19:25.2016|TRACE|Program|Server sends: n: Source position transformations: 00:00:00.0528569
+2025-04-25 00:19:25.3113|TRACE|Program|Server sends: n: Packaging assembly: 00:00:00.1097765
+2025-04-25 00:19:25.4773|TRACE|Program|Server sends: n: Computing metadata: 00:00:00.1659272
+2025-04-25 00:19:25.6115|TRACE|Program|Server sends: n: Writing reexports root.js: 00:00:00.1342945
+2025-04-25 00:19:25.6829|TRACE|Program|Server sends: n: Writing Project_alpha.Client.js: 00:00:00.0713685
+2025-04-25 00:19:25.6829|TRACE|Program|Server sends: n: Writing $EntryPoint.js: 00:00:00.0016468
+2025-04-25 00:19:25.8156|TRACE|Program|Server sends: n: Writing .d.ts files: 00:00:00.1309973
+2025-04-25 00:19:25.8556|TRACE|Program|Server sends: n: Hashing resources: 00:00:00.0400341
+2025-04-25 00:19:26.1031|TRACE|Program|Server sends: n: Serializing metadata: 00:00:00.2474829
+2025-04-25 00:19:26.2898|TRACE|Program|Server sends: n: Writing resources into assembly: 00:00:00.1867371
+2025-04-25 00:19:26.6336|TRACE|Program|Server sends: n: Bundling: 00:00:00.3438386
+2025-04-25 00:19:26.6563|TRACE|Program|Server sends: x: 0
