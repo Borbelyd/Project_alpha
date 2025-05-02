@@ -16,25 +16,33 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x' 
+
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '16'
 
-    - name: Verify working directory
-      run: ls -la
-      working-directory: .
+    - name: Restore .NET dependencies
+      run: dotnet restore
 
-    - name: Install dependencies
-      run: npm install
-      working-directory: ./wwwroot
+    - name: Build .NET project
+      run: dotnet build --configuration Release
 
-    - name: Build project
-      run: npm run build
-      working-directory: ./wwwroot
+    - name: Publish WebSharper app
+      run: dotnet publish src/ProjectAlpha/ProjectAlpha.fsproj -c Release -o output
+
+    - name: Build frontend (if applicable)
+      run: |
+        npm install
+        npm run build
+      working-directory: ./src/ProjectAlpha/wwwroot
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./wwwroot/dist
+        publish_dir: ./output/wwwroot
