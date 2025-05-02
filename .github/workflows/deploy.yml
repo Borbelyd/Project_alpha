@@ -1,25 +1,22 @@
-name: Deploy Project Alpha
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Set up .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x' # vagy '7.0.x', attól függ, mit használsz
+        dotnet-version: '8.0.x'
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -43,7 +40,7 @@ jobs:
       run: npm run build
       working-directory: ./src/ProjectAlpha/wwwroot
 
-    - name: Add .nojekyll to bypass Jekyll processing
+    - name: Add .nojekyll
       run: touch ./src/ProjectAlpha/wwwroot/dist/.nojekyll
 
     - name: Deploy to GitHub Pages
