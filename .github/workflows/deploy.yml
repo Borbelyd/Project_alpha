@@ -19,7 +19,7 @@ jobs:
     - name: Set up .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x' 
+        dotnet-version: '8.0.x' # vagy '7.0.x', attól függ, mit használsz
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -35,14 +35,19 @@ jobs:
     - name: Publish WebSharper app
       run: dotnet publish src/ProjectAlpha/ProjectAlpha.fsproj -c Release -o output
 
-    - name: Build frontend (if applicable)
-      run: |
-        npm install
-        npm run build
+    - name: Install frontend dependencies
+      run: npm install
       working-directory: ./src/ProjectAlpha/wwwroot
+
+    - name: Build frontend
+      run: npm run build
+      working-directory: ./src/ProjectAlpha/wwwroot
+
+    - name: Add .nojekyll to bypass Jekyll processing
+      run: touch ./src/ProjectAlpha/wwwroot/dist/.nojekyll
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./output/wwwroot
+        publish_dir: ./src/ProjectAlpha/wwwroot/dist
