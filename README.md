@@ -1,6 +1,7 @@
 # Project Alpha
 
 ## Overview
+![timer](https://github.com/user-attachments/assets/b857b6fd-c6cb-4708-81f3-873e5e19e966)
 
 **Project Alpha** is a web-based focus timer application designed to help users manage their time effectively. It provides a simple and intuitive interface for tracking focus sessions, short breaks, and long breaks. The application is built using modern web technologies and includes customizable features to enhance productivity.
 
