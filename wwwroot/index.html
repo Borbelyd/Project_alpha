@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Project_alpha</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="Scripts/Project_alpha.css" />
+    <title>Fókusz Időzítő</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Don't show the not-yet-loaded templates */
+        [ws-template], [ws-children-template] {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript" src="Scripts/Project_alpha.head.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="app-title">🎯 Fókusz Időzítő</h1>
+
+        <div id="timer" class="timer-display">25:00</div>
+
+        <div class="controls">
+            <button id="start" class="btn start-btn">▶️ Start</button>
+            <button id="stop" class="btn stop-btn">⏹ Stop</button>
+            <button id="reset" class="btn reset-btn">🔄 Reset</button>
+        </div>
+
+        <div class="mode-selector">
+            <button id="short-break" class="btn mode-btn">☕ Rövid szünet</button>
+            <button id="long-break" class="btn mode-btn">🛌 Hosszú szünet</button>
+        </div>
+
+        <div id="status" class="status-indicator">Aktív szakasz</div>
+
+        <footer>
+            <p>Created by Dominik Borbely ❤️</p>
+        </footer>
+    </div>
+
+    <script>
+        let timerDisplay = document.getElementById("timer");
+        let statusText = document.getElementById("status");
+        let startBtn = document.getElementById("start");
+        let stopBtn = document.getElementById("stop");
+        let resetBtn = document.getElementById("reset");
+        let shortBreakBtn = document.getElementById("short-break");
+        let longBreakBtn = document.getElementById("long-break");
+
+        let time = 25 * 60;
+        let interval;
+        let running = false;
+
+        function updateDisplay() {
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        }
+
+        startBtn.onclick = () => {
+            if (!running) {
+                running = true;
+                interval = setInterval(() => {
+                    if (time > 0) {
+                        time--;
+                        updateDisplay();
+                    } else {
+                        clearInterval(interval);
+                        statusText.textContent = "⏰ Idő letelt!";
+                    }
+                }, 1000);
+                statusText.textContent = "Fókuszban 🔥";
+            }
+        };
+
+        stopBtn.onclick = () => {
+            running = false;
+            clearInterval(interval);
+            statusText.textContent = "⏸ Leállítva";
+        };
+
+        resetBtn.onclick = () => {
+            running = false;
+            clearInterval(interval);
+            time = 25 * 60;
+            updateDisplay();
+            statusText.textContent = "Újraindítva 🔁";
+        };
+
+        shortBreakBtn.onclick = () => {
+            running = false;
+            clearInterval(interval);
+            time = 5 * 60;
+            updateDisplay();
+            statusText.textContent = "☕ Rövid szünet";
+        };
+
+        longBreakBtn.onclick = () => {
+            running = false;
+            clearInterval(interval);
+            time = 15 * 60;
+            updateDisplay();
+            statusText.textContent = "🛌 Hosszú szünet";
+        };
+
+        updateDisplay();
+    </script>
+
+    <script type="module" src="Scripts/Project_alpha.min.js"></script>
+</body>
+</html>
