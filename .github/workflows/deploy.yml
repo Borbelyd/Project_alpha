@@ -1,50 +1,63 @@
 name: Deploy to GitHub Pages
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false 
+          submodules: true
 
-    - name: Set up .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
+      - name: Build
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
 
-    - name: Restore .NET dependencies
-      run: dotnet restore
+      - name: Reinstall Node.js dependencies
+        run: |
+          cd Project_alpha
+          rm -rf node_modules # Remove existing node_modules
+          npm ci # Reinstall dependencies for the current platform
 
-    - name: Build .NET project
-      run: dotnet build --configuration Release
+      - name: Build project
+        run: dotnet publish -c Release -o out
 
-    - name: Publish WebSharper app
-      run: dotnet publish src/ProjectAlpha/ProjectAlpha.fsproj -c Release -o output
-
-    - name: Install frontend dependencies
-      run: npm install
-      working-directory: ./src/ProjectAlpha/wwwroot
-
-    - name: Build frontend
-      run: npm run build
-      working-directory: ./src/ProjectAlpha/wwwroot
-
-    - name: Add .nojekyll
-      run: touch ./src/ProjectAlpha/wwwroot/dist/.nojekyll
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./src/ProjectAlpha/wwwroot/dist
+      - name: Check output directory
+        run: |
+          ls -la out
+          ls -la out/wwwroot || echo "No wwwroot directory"
+        
+      - name: Prepare deployment
+        run: |
+          # If index.html is in a wwwroot subfolder, copy it to the root
+          if [ -f out/wwwroot/index.html ]; then
+            cp -r out/wwwroot/* out/
+          fi
+          # Create a .nojekyll file to prevent GitHub Pages from ignoring files starting with underscore
+          touch out/.nojekyll
+        
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: out
