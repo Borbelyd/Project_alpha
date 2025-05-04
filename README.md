@@ -1,5 +1,8 @@
 # Project Alpha
 
+## Try live link
+   https://borbelyd.github.io/Project_alpha/
+
 ## Overview
 ![timer](https://github.com/user-attachments/assets/b857b6fd-c6cb-4708-81f3-873e5e19e966)
 
